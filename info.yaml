@@ -7,7 +7,7 @@ project:
 # Source files must be in ./src and you must list each source file separately
   source_files:        
     - top_level.v
-#    - decoder.v
+    - lfsr_64bit.v
   top_module:  "tt_um_devinatkin_cookiemonster"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
 # How many tiles your design occupies? A single tile is about 167x108 uM.
