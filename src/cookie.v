@@ -4,7 +4,8 @@ module cookie (
     input wire clk,      // Clock signal
     input wire rst_n,    // Active-low reset signal
     input wire en,       // Enable signal
-    input wire rbit      // Random bit
+    input wire rbit,      // Random bit input
+    output reg rbit_o    // Random bit output
 );
 
     wire [3:0] clk_int [3:0];
@@ -12,6 +13,7 @@ module cookie (
     wire [3:0] en_int [3:0];
     wire [3:0] rbit_int [3:0];
 
+    assign rbit_o = rbit_int[3][3];
     // The corner module
     crumb u00 (
         .clk(clk),

@@ -26,10 +26,11 @@ module tt_um_devinatkin_cookiemonster
         .clk(clk),
         .rst_n(rst_n),
         .en(ena),
-        .rbit(rnd_number[0])
+        .rbit(rnd_number[0]),
+        .rbit_o(uo_out[0])
     );
 
     assign uio_oe = 8'b11111111;    // Enable all IOs as outputs
     assign uio_out = rnd_number[7:0];   // Set all IOs to the random number
-    assign uo_out = 8'b00000000;    // Set all outputs to 0
+    assign uo_out[7:1] = 7'b0000000;    // Set all outputs to 0
 endmodule
