@@ -18,6 +18,7 @@ module tb_crumb();
     .rst_n(rst_n_tb),
     .en(en_tb),
     .rbit(rbit_tb),
+    .rbit2(0'b1),
     .clk_o(clk_o_tb),
     .rst_no(rst_no_tb),
     .en_o(en_o_tb),

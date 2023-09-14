@@ -4,7 +4,8 @@ module crumb(
 input wire clk,         // Clock signal
 input wire rst_n,       // Active-low reset signal
 input wire en,          // Enable signal
-input wire rbit,        // Random bit
+input wire rbit,        // Random bit in 1
+input wire rbit2,       // Random bit in 2
 output reg clk_o,       // Clock output
 output reg rst_no,      // Reset output
 output reg en_o,        // Enable output
@@ -21,7 +22,7 @@ always@(posedge clk) begin
     end else if (en) begin
         clk_o <= ~clk_o;
         rst_no <= ~rst_no;
-        rbit_o <= rbit;
+        rbit_o <= rbit ^ rbit2;
         en_o <= en;
     end
 end
