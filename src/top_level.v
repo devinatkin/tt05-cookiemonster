@@ -18,6 +18,16 @@ module tt_um_devinatkin_cookiemonster
     lfsr_64bit rng (
         .clk(clk),
         .rst_n(rst_n),
+        .en(en),
+        .rnd_number(rnd_number)
+    );
+
+    wire [15:0] rnd_number;
+
+    // Instantiate the lfsr_64bit module
+    lfsr_64bit rng (
+        .clk(clk),
+        .rst_n(rst_n),
         .en(ena),
         .rnd_number(rnd_number)
     );
