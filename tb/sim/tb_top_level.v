@@ -29,6 +29,12 @@ module tb_tt_um_devinatkin_cookiemonster;
         #10 clk = ~clk;  // Invert the clock every 10ns, giving a 20ns period (50 MHz)
     end
 
+    // VCD file for GTKWave
+    initial begin
+        $dumpfile("top.vcd");
+        $dumpvars(0, tb_tt_um_devinatkin_cookiemonster);
+    end
+
     // Test sequence
     initial begin
         // Initialize signals
@@ -43,6 +49,10 @@ module tb_tt_um_devinatkin_cookiemonster;
 
         // Enable the design
         ena = 1;
+
+        // Run for some cycles to observe randomness
+        #200;
+
 
         $display("Starting test sequence");
         $display("No test sequence implemented");
