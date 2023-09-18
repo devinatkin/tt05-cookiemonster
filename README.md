@@ -1,5 +1,8 @@
 [![gds](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/gds.yaml/badge.svg)](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/gds.yaml)
 [![wokwi_test](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/wokwi_test.yaml/badge.svg)](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/wokwi_test.yaml)
+[![docs](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/docs.yaml/badge.svg)](https://github.com/devinatkin/tt05-cookiemonster/actions/workflows/docs.yaml)
+
+
 Chat GPTs interpretation of this terrible project. Don't look to this for inspiration it's almost deliberately a series of bad ideas. 
 
 🍪 CookieMonster: A Deliciously Unconventional Movable Feast Machine
