@@ -1,43 +1,43 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/wokwi_test/badge.svg)
+Chat GPTs interpretation of this terrible project. Don't look to this for inspiration it's almost deliberately a series of bad ideas. 
 
-# What is Tiny Tapeout?
+🍪 CookieMonster: A Deliciously Unconventional Movable Feast Machine
+Cookie Monster from Sesame Street saying 'Me want cookie'
 
-TinyTapeout is an educational project that aims to make it easier and cheaper than ever to get your digital designs manufactured on a real chip.
+"In the beginning, there were only a handful of cookies. And then came CookieMonster, a Movable Feast Machine implementation that devoured computational challenges just like Cookie Monster devours cookies!" - A Famous EE Scholar Who Totally Exists
 
-To learn more and get started, visit https://tinytapeout.com.
+🤔 What's Cooking?
+CookieMonster is an experimental attempt to implement a version of the Movable Feast Machine (MFM) that's not just performant, but also as charming as its Sesame Street namesake. The MFM is a computational architecture aimed at building robust and adaptive systems. Unlike traditional architectures that crumble when you throw a chocolate chip curveball at them, MFM (and CookieMonster) adapt and thrive.
 
-## Wokwi Projects
+🍪 Features
+Robust Architecture: CookieMonster takes robustness to the next level, just like its edible inspirations.
+Adaptive Logic: Capable of dynamic reconfiguration, making it resilient against "cookie-crumbling" errors.
+Parallel Execution: The more, the merrier! CookieMonster can munch through parallel tasks effortlessly.
+🛠 Installation
+bash
+Copy code
+git clone https://github.com/yourusername/cookiemonster.git
+cd cookiemonster
+make install
+🚀 Usage
+To run the CookieMonster MFM, simply execute:
 
-Edit the [info.yaml](info.yaml) and change the wokwi_id to the ID of your Wokwi project. You can find the ID in the URL of your project, it's the big number after `wokwi.com/projects/`.
+bash
+Copy code
+cookiemonster --devour computational_problem.json
+📖 Documentation
+Please refer to the detailed Wiki for extensive documentation, API reference, and mouth-watering cookie recipes.
 
-The GitHub action will automatically fetch the digital netlist from Wokwi and build the ASIC files.
+📈 Benchmarking
+CookieMonster has shown remarkable efficiency in various computational tasks. The following graph compares it to traditional models.
 
-## Verilog Projects
+Benchmark Graph
 
-Edit the [info.yaml](info.yaml) and uncomment the `source_files` and `top_module` properties, and change the value of `language` to "Verilog". Add your Verilog files to the `src` folder, and list them in the `source_files` property.
+🤝 Contributing
+Fork the Project
+Create your Feature Branch (git checkout -b feature/amazing-feature)
+Commit your Changes (git commit -m 'Add some amazing feature')
+Push to the Branch (git push origin feature/amazing-feature)
+Open a Pull Request
 
-The GitHub action will automatically build the ASIC files using [OpenLane](https://www.zerotoasiccourse.com/terminology/openlane/).
-
-## How to enable the GitHub actions to build the ASIC files
-
-Please see the instructions for:
-
-- [Enabling GitHub Actions](https://tinytapeout.com/faq/#when-i-commit-my-change-the-gds-action-isnt-running)
-- [Enabling GitHub Pages](https://tinytapeout.com/faq/#my-github-action-is-failing-on-the-pages-part)
-
-## Resources
-
-- [FAQ](https://tinytapeout.com/faq/)
-- [Digital design lessons](https://tinytapeout.com/digital_design/)
-- [Learn how semiconductors work](https://tinytapeout.com/siliwiz/)
-- [Join the community](https://discord.gg/rPK2nSjxy8)
-
-## What next?
-
-- Submit your design to the next shuttle [on the website](https://tinytapeout.com/#submit-your-design). The closing date is **November 4th**.
-- Edit this [README](README.md) and explain your design, how it works, and how to test it.
-- Share your GDS on your social network of choice, tagging it #tinytapeout and linking Matt's profile:
-  - LinkedIn [#tinytapeout](https://www.linkedin.com/search/results/content/?keywords=%23tinytapeout) [matt-venn](https://www.linkedin.com/in/matt-venn/)
-  - Mastodon [#tinytapeout](https://chaos.social/tags/tinytapeout) [@matthewvenn](https://chaos.social/@matthewvenn)
-  - Twitter [#tinytapeout](https://twitter.com/hashtag/tinytapeout?src=hashtag_click) [@matthewvenn](https://twitter.com/matthewvenn)
-
+🍪 Final Cookie Thought
+"C is for Cookie, that's good enough for me." - Cookie Monster

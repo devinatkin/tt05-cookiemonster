@@ -1,54 +1,95 @@
 `timescale 1ns / 1ps
 
 module cookie (
-    input wire clk,      // Clock signal
-    input wire rst_n,    // Active-low reset signal
-    input wire en,       // Enable signal
-    input wire rbit,     // Random bit input
-    output reg rbit_o    // Random bit output
+    input wire clk,         // Clock signal
+    input wire rst_n,       // Active-low reset signal
+    input wire en,          // Enable signal
+    input wire run,         // Run signal
+    input wire display,     // Display out signal (Pulse to display the crumb)
+    input wire input_bit,   // Input to the shift register
+    input wire display_shift_in, // Display input to the shift register
+    output reg output_bit,       // Output from the shift register
+    output reg display_shift_out // Display output from the shift register
 );
 
-    wire [3:0] clk_int [3:0];
-    wire [3:0] rst_n_int [3:0];
-    wire [3:0] en_int [3:0];
-    wire [3:0] rbit_int [3:0];
+    wire[256:0] shift_values;
+    wire[256:0] display_shift_values;
+    wire[1:0] state_values [255:0];
+    assign shift_values[0] = input_bit;
+    assign display_shift_values[0] = display_shift_in;
 
-    assign rbit_o = rbit_int[3][3];
+    generate
+        genvar i, j;
+        for(i = 0; i < 16; i=i+1) begin
+            for(j = 0; j < 16; j=j+1) begin
+                localparam idx = (i * 16) + j;
+                localparam y_cor = i;
+                localparam x_cor = j;
+                reg left_element;
+                reg right_element;
+                reg up_element;
+                reg down_element;
+                reg up_left_element;
+                reg up_right_element;
+                reg down_left_element;
+                reg down_right_element;
 
-    // Manually instantiate the corner crumb module
-    crumb u00 (
-        .clk(clk),
-        .rst_n(rst_n),
-        .en(en),
-        .rbit(rbit),
-        .rbit2(1'b1),
-        .clk_o(clk_int[0][0]),
-        .rst_no(rst_n_int[0][0]),
-        .en_o(en_int[0][0]),
-        .rbit_o(rbit_int[0][0])
-    );
-
-    // First row (i = 0)
-    crumb u01 (.clk(clk_int[0][0]), .rst_n(rst_n_int[0][0]), .en(en_int[0][0]), .rbit(rbit_int[0][0]), .rbit2(1'b0), .clk_o(clk_int[0][1]), .rst_no(rst_n_int[0][1]), .en_o(en_int[0][1]), .rbit_o(rbit_int[0][1]));
-    crumb u02 (.clk(clk_int[0][1]), .rst_n(rst_n_int[0][1]), .en(en_int[0][1]), .rbit(rbit_int[0][1]), .rbit2(1'b0), .clk_o(clk_int[0][2]), .rst_no(rst_n_int[0][2]), .en_o(en_int[0][2]), .rbit_o(rbit_int[0][2]));
-    crumb u03 (.clk(clk_int[0][2]), .rst_n(rst_n_int[0][2]), .en(en_int[0][2]), .rbit(rbit_int[0][2]), .rbit2(1'b0), .clk_o(clk_int[0][3]), .rst_no(rst_n_int[0][3]), .en_o(en_int[0][3]), .rbit_o(rbit_int[0][3]));
-
-    // Second row (i = 1)
-    crumb u10 (.clk(clk_int[0][0]), .rst_n(rst_n_int[0][0]), .en(en_int[0][0]), .rbit(rbit_int[0][0]), .rbit2(1'b0), .clk_o(clk_int[1][0]), .rst_no(rst_n_int[1][0]), .en_o(en_int[1][0]), .rbit_o(rbit_int[1][0]));
-    crumb u11 (.clk(clk_int[1][0]), .rst_n(rst_n_int[1][0]), .en(en_int[1][0]), .rbit(rbit_int[1][0]), .rbit2(rbit_int[0][1]), .clk_o(clk_int[1][1]), .rst_no(rst_n_int[1][1]), .en_o(en_int[1][1]), .rbit_o(rbit_int[1][1]));
-    crumb u12 (.clk(clk_int[1][1]), .rst_n(rst_n_int[1][1]), .en(en_int[1][1]), .rbit(rbit_int[1][1]), .rbit2(rbit_int[0][2]), .clk_o(clk_int[1][2]), .rst_no(rst_n_int[1][2]), .en_o(en_int[1][2]), .rbit_o(rbit_int[1][2]));
-    crumb u13 (.clk(clk_int[1][2]), .rst_n(rst_n_int[1][2]), .en(en_int[1][2]), .rbit(rbit_int[1][2]), .rbit2(rbit_int[0][3]), .clk_o(clk_int[1][3]), .rst_no(rst_n_int[1][3]), .en_o(en_int[1][3]), .rbit_o(rbit_int[1][3]));
-
-    // Third row (i = 2)
-    crumb u20 (.clk(clk_int[1][0]), .rst_n(rst_n_int[1][0]), .en(en_int[1][0]), .rbit(rbit_int[1][0]), .rbit2(1'b0), .clk_o(clk_int[2][0]), .rst_no(rst_n_int[2][0]), .en_o(en_int[2][0]), .rbit_o(rbit_int[2][0]));
-    crumb u21 (.clk(clk_int[2][0]), .rst_n(rst_n_int[2][0]), .en(en_int[2][0]), .rbit(rbit_int[2][0]), .rbit2(rbit_int[1][1]), .clk_o(clk_int[2][1]), .rst_no(rst_n_int[2][1]), .en_o(en_int[2][1]), .rbit_o(rbit_int[2][1]));
-    crumb u22 (.clk(clk_int[2][1]), .rst_n(rst_n_int[2][1]), .en(en_int[2][1]), .rbit(rbit_int[2][1]), .rbit2(rbit_int[1][2]), .clk_o(clk_int[2][2]), .rst_no(rst_n_int[2][2]), .en_o(en_int[2][2]), .rbit_o(rbit_int[2][2]));
-    crumb u23 (.clk(clk_int[2][2]), .rst_n(rst_n_int[2][2]), .en(en_int[2][2]), .rbit(rbit_int[2][2]), .rbit2(rbit_int[1][3]), .clk_o(clk_int[2][3]), .rst_no(rst_n_int[2][3]), .en_o(en_int[2][3]), .rbit_o(rbit_int[2][3]));
-
-    // Fourth row (i = 3)
-    crumb u30 (.clk(clk_int[2][0]), .rst_n(rst_n_int[2][0]), .en(en_int[2][0]), .rbit(rbit_int[2][0]), .rbit2(1'b0), .clk_o(clk_int[3][0]), .rst_no(rst_n_int[3][0]), .en_o(en_int[3][0]), .rbit_o(rbit_int[3][0]));
-    crumb u31 (.clk(clk_int[3][0]), .rst_n(rst_n_int[3][0]), .en(en_int[3][0]), .rbit(rbit_int[3][0]), .rbit2(rbit_int[2][1]), .clk_o(clk_int[3][1]), .rst_no(rst_n_int[3][1]), .en_o(en_int[3][1]), .rbit_o(rbit_int[3][1]));
-    crumb u32 (.clk(clk_int[3][1]), .rst_n(rst_n_int[3][1]), .en(en_int[3][1]), .rbit(rbit_int[3][1]), .rbit2(rbit_int[2][2]), .clk_o(clk_int[3][2]), .rst_no(rst_n_int[3][2]), .en_o(en_int[3][2]), .rbit_o(rbit_int[3][2]));
-    crumb u33 (.clk(clk_int[3][2]), .rst_n(rst_n_int[3][2]), .en(en_int[3][2]), .rbit(rbit_int[3][2]), .rbit2(rbit_int[2][3]), .clk_o(clk_int[3][3]), .rst_no(rst_n_int[3][3]), .en_o(en_int[3][3]), .rbit_o(rbit_int[3][3]));
+                if(x_cor > 0) begin // If the x coordinate is greater than 0 then the left element is the element to the left of the current element
+                    assign left_element = state_values[idx - 1][0];
+                end else begin
+                    assign left_element = 1'b0;
+                end
+                if(x_cor < 15) begin // If the x coordinate is less than 15 then the right element is the element to the right of the current element
+                    assign right_element = state_values[idx + 1][0];
+                end else begin
+                    assign right_element = 1'b0;
+                end
+                if(y_cor > 0) begin // If the y coordinate is greater than 0 then the up element is the element above the current element
+                    assign up_element = state_values[idx - 16][0];
+                    if(x_cor > 0) begin // If the x coordinate is greater than 0 then the up left element is the element above and to the left of the current element
+                        assign up_left_element = state_values[idx - 17][0];
+                    end else begin
+                        assign up_left_element = 1'b0;
+                    end
+                    if(x_cor < 15) begin // If the x coordinate is less than 15 then the up right element is the element above and to the right of the current element
+                        assign up_right_element = state_values[idx - 15][0];
+                    end else begin
+                        assign up_right_element = 1'b0;
+                    end
+                end else begin
+                    assign up_element = 1'b0;
+                end
+                if(y_cor < 15) begin // If the y coordinate is less than 15 then the down element is the element below the current element
+                    assign down_element = state_values[idx + 16][0];
+                    if(x_cor > 0) begin // If the x coordinate is greater than 0 then the down left element is the element below and to the left of the current element
+                        assign down_left_element = state_values[idx + 15][0];
+                    end else begin
+                        assign down_left_element = 1'b0;
+                    end
+                    if(x_cor < 15) begin // If the x coordinate is less than 15 then the down right element is the element below and to the right of the current element
+                        assign down_right_element = state_values[idx + 17][0];
+                    end else begin
+                        assign down_right_element = 1'b0;
+                    end
+                end else begin
+                    assign down_element = 1'b0;
+                end
+                crumb crumb_inst(
+                    .clk(clk),
+                    .rst_n(rst_n),
+                    .en(en),
+                    .run(run),
+                    .display(display),
+                    .nearest_neighbors({left_element,right_element,up_element,down_element,up_left_element,up_right_element,down_left_element,down_right_element}),
+                    //.nearest_neighbors({(x_cor > 0) ? state_values[idx - 1][0] : 1'b0, (x_cor < 15) ? state_values[idx + 1][0]: 1'b0, (y_cor > 15) ? state_values[idx -16][0]: 1'b0, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0}),
+                    .in_shift(shift_values[idx]),
+                    .out_shift(shift_values[idx + 1]),
+                    .state(state_values[idx]),
+                    .display_shift_in(display_shift_values[idx]),
+                    .display_shift_out(display_shift_values[idx + 1])
+                );
+            end
+        end
+    endgenerate
 
 endmodule

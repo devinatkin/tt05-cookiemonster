@@ -13,7 +13,7 @@ project:
   top_module:  "tt_um_devinatkin_cookiemonster"      # Put the name of your top module here, must start with "tt_um_". Make it unique by including your github username
 
 # How many tiles your design occupies? A single tile is about 167x108 uM.
-  tiles: "1x1"    # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2 or 8x2
+  tiles: "4x2"    # Valid values: 1x1, 1x2, 2x2, 3x2, 4x2 or 8x2
 
 # Keep a track of the submission yaml
 yaml_version: 4
@@ -26,7 +26,7 @@ documentation:
   author:       "Devin Atkin"      # Your name
   title:        "Cookie Monster"      # Project title
   language:     "Wokwi" # other examples include Verilog, Amaranth, VHDL, etc
-  description:  "An initial attempt at implementing a limited feature set of the Movable Feast Machine"      # Short description of what your project does
+  description:  "Implementing Conways Game of Life in a manner suitable to expand"      # Short description of what your project does
 
 # Longer description of how the project works. You can use standard markdown format.
   how_it_works: |
