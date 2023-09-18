@@ -59,6 +59,8 @@ module cookie (
                     end
                 end else begin
                     assign up_element = 1'b0;
+                    assign up_left_element = 1'b0;
+                    assign up_right_element = 1'b0;
                 end
                 if(y_cor < 15) begin // If the y coordinate is less than 15 then the down element is the element below the current element
                     assign down_element = state_values[idx + 16][0];
@@ -73,6 +75,8 @@ module cookie (
                         assign down_right_element = 1'b0;
                     end
                 end else begin
+                    assign down_left_element = 1'b0;
+                    assign down_right_element = 1'b0;
                     assign down_element = 1'b0;
                 end
                 crumb crumb_inst(
