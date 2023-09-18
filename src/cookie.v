@@ -18,6 +18,7 @@ module cookie (
     assign shift_values[0] = input_bit;
     assign display_shift_values[0] = display_shift_in;
     assign display_shift_out = display_shift_values[255];
+    assign output_bit = shift_values[255];
     generate
         genvar i, j;
         for(i = 0; i < 16; i=i+1) begin
