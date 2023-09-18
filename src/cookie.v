@@ -25,14 +25,14 @@ module cookie (
                 localparam idx = (i * 16) + j;
                 localparam y_cor = i;
                 localparam x_cor = j;
-                reg left_element;
-                reg right_element;
-                reg up_element;
-                reg down_element;
-                reg up_left_element;
-                reg up_right_element;
-                reg down_left_element;
-                reg down_right_element;
+                wire left_element;
+                wire right_element;
+                wire up_element;
+                wire down_element;
+                wire up_left_element;
+                wire up_right_element;
+                wire down_left_element;
+                wire down_right_element;
 
                 if(x_cor > 0) begin // If the x coordinate is greater than 0 then the left element is the element to the left of the current element
                     assign left_element = state_values[idx - 1][0];
