@@ -49,4 +49,5 @@ module tt_um_devinatkin_cookiemonster
     assign display_shift_in = ui_in[3]; // Set the display shift in to the fourth input
     assign uo_out[1] = output_bit;      // Set the output bit to the second output
     assign uo_out[2] = display_shift_out;   // Set the display shift out to the third output
+    assign uo_out[0] = 1'b1;    // Set the display shift in to the first output
 endmodule
