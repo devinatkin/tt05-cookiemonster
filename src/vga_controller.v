@@ -54,4 +54,7 @@ module vga_controller(
         .ycoor(ycoor)
     );
 
+    assign red_pixel = red_pixel_in;
+    assign green_pixel = green_pixel_in;
+    assign blue_pixel = blue_pixel_in;
 endmodule
