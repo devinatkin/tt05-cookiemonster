@@ -83,7 +83,7 @@ module tt_um_devinatkin_cookiemonster
 
     assign videodata_in = rnd_number [4];
     assign uio_oe = 8'b11111111;    // Enable all IOs as outputs
-    assign uio_out = rnd_number[7:2];   // Set all IOs to the random number
+    assign uio_out[7:2] = rnd_number[7:2];   // Set all IOs to the random number
     assign uo_out[1:0] = red_pixel_out; // Set the red pixel to the first two outputs
     assign uo_out[3:2] = green_pixel_out;   // Set the green pixel to the third and fourth outputs
     assign uo_out[5:4] = blue_pixel_out;    // Set the blue pixel to the fifth and sixth outputs
