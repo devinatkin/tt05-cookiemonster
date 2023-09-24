@@ -1,49 +1,67 @@
-module tb_fifo_1bit_256depth();
+`timescale 1ns / 1ps
 
-  reg clk;
-  reg enable;
-  reg rst_n;
-  reg data_in;
-  wire data_out;
+module tb_ram_16x16;
 
-  // Instantiate the FIFO module
-  fifo_1bit_256depth uut (
-    .clk(clk),
-    .enable(enable),
-    .rst_n(rst_n),
-    .data_in(data_in),
-    .data_out(data_out)
-  );
+    // Declare signals
+    reg clk;
+    reg rst_n;
+    reg [3:0] x;
+    reg [3:0] y;
+    reg write_enable;
+    reg write_data;
+    wire read_data;
 
-  // Clock generation
-  always begin
-    #5 clk = ~clk;
-  end
+    // Instantiate the RAM module
+    ram_16x16 uut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .x(x),
+        .y(y),
+        .write_enable(write_enable),
+        .write_data(write_data),
+        .read_data(read_data)
+    );
 
-  // Testbench stimulus
-  initial begin
-    clk = 0;
-    enable = 0;
-    rst_n = 0;
-    data_in = 1'b0;
+    // Clock generation
+    always begin
+        #5 clk = ~clk;
+    end
 
-    // Apply reset
-    #10 rst_n = 0;
-    #10 rst_n = 1;
-    
-    // Test Case 1: Write to FIFO and read back
-    enable = 1;
-    data_in = 1'b1;
-    #10;
-    $display("Data out after write-read operation 1: %b", data_out);
-    
-    // Test Case 2: Write another value to FIFO and read back
-    data_in = 1'b0;
-    #10;
-    $display("Data out after write-read operation 2: %b", data_out);
+    // Test sequence
+    initial begin
+        // Initialize signals
+        clk = 0;
+        rst_n = 0;
+        x = 4'b0;
+        y = 4'b0;
+        write_enable = 0;
+        write_data = 0;
 
-    // Finish simulation
-    $finish;
-  end
+        // Apply reset
+        #10 rst_n = 1;
+        #10 rst_n = 0;
+        #10 rst_n = 1;
+
+        // Write data to RAM
+        x = 4'b0001; y = 4'b0010; write_enable = 1; write_data = 1;
+        #10;
+
+        // Read data from RAM
+        x = 4'b0001; y = 4'b0010; write_enable = 0;
+        #10;
+        $display("Read data at (1, 2): %b", read_data);
+
+        // Write data to another location in RAM
+        x = 4'b0100; y = 4'b0101; write_enable = 1; write_data = 1;
+        #10;
+
+        // Read data from the new location
+        x = 4'b0100; y = 4'b0101; write_enable = 0;
+        #10;
+        $display("Read data at (4, 5): %b", read_data);
+
+        // End simulation
+        $finish;
+    end
 
 endmodule

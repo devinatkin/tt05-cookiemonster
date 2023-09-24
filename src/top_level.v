@@ -31,10 +31,16 @@ module tt_um_devinatkin_cookiemonster
     wire [9:0] xcoor;
     wire [9:0] ycoor;
 
+    wire [1:0] red;
+    wire [1:0] green;
+    wire [1:0] blue;
+
     wire [1:0] red_pixel_out;
     wire [1:0] green_pixel_out;
     wire [1:0] blue_pixel_out;
 
+    wire active;
+    
     // Instantiate the lfsr_64bit module
     lfsr_64bit rng (
         .clk(clk),
@@ -55,25 +61,27 @@ module tt_um_devinatkin_cookiemonster
         .display_shift_out(display_shift_out)
     );
 
-    fifo_1bit_256depth video_memory (
+    // Instantiate the vga_ram_display module
+    vga_ram_display video_memory (
         .clk(clk),
-        .enable(ena),
         .rst_n(rst_n),
-        .data_in(videodata_in),
-        .data_out(videodata_out)
+        .xcoor(xcoor),
+        .ycoor(ycoor),
+        .red(red),
+        .green(green),
+        .blue(blue)
     );
 
     vga_controller vga_ctrl_instance(
         .clk(clk),
         .rst_n(rst_n),
         .enable(ena),
-        .red_pixel_in(rnd_number[1:0]),
-        .green_pixel_in(rnd_number[3:2]),
-        .blue_pixel_in(rnd_number[5:4]),
+        .red_pixel_in(red),
+        .green_pixel_in(green),
+        .blue_pixel_in(blue),
         .hs(hs),
         .vs(vs),
-        .x(x),
-        .y(y),
+        .display_active(active)
         .xcoor(xcoor),
         .ycoor(ycoor),
         .red_pixel_out(red_pixel_out),

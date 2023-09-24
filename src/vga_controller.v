@@ -9,10 +9,9 @@ module vga_controller(
     input wire [1:0] blue_pixel_in,
     output wire hs,
     output wire vs,
-    output wire [9:0] x,
-    output wire [9:0] y,
     output wire [9:0] xcoor,
     output wire [9:0] ycoor,
+    output wire display_active,
     output wire [1:0] red_pixel_out,
     output wire [1:0] green_pixel_out,
     output wire [1:0] blue_pixel_out
@@ -57,4 +56,5 @@ module vga_controller(
     assign red_pixel = red_pixel_in;
     assign green_pixel = green_pixel_in;
     assign blue_pixel = blue_pixel_in;
+    assign display_active = active;
 endmodule

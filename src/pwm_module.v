@@ -20,7 +20,7 @@ output reg [bit_width-1:0] counter;
 
 // pwm output is high when counter is less than duty
 // otherwise, pwm output is low
-always @(posedge clk)
+always @(posedge clk or negedge rst_n)
 begin
     if (~rst_n) begin
         counter <= 0;
