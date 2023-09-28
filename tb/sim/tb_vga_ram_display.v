@@ -11,12 +11,17 @@ module tb_vga_ram_display;
     wire [1:0] green;
     wire [1:0] blue;
 
+    reg write_enable = 1'b1;
+    reg videodata_in = 1'b1;
+
     // Instantiate the vga_ram_display module
     vga_ram_display uut (
         .clk(clk),
         .rst_n(rst_n),
         .xcoor(xcoor),
         .ycoor(ycoor),
+        .write_enable(write_enable),
+        .write_data(videodata_in),
         .red(red),
         .green(green),
         .blue(blue)
@@ -25,6 +30,13 @@ module tb_vga_ram_display;
     // Clock generation
     always begin
         #5 clk = ~clk;
+    end
+
+    // Simulation Initialization
+    initial begin
+        $dumpfile ("vga_ram_display.vcd");
+        $dumpvars (0, tb_vga_ram_display);
+        #1;
     end
 
     // Test sequence

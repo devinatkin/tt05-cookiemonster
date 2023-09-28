@@ -22,6 +22,9 @@ module vga_controller(
     wire [1:0] green_pixel;
     wire [1:0] blue_pixel;
 
+    wire [9:0] x;
+    wire [9:0] y;
+
     // VGA Timing Generator
     vga_timing_gen vga_timing(
         .clk(clk),

@@ -40,7 +40,7 @@ module tt_um_devinatkin_cookiemonster
     wire [1:0] blue_pixel_out;
 
     wire active;
-    
+    wire write_enable;
     // Instantiate the lfsr_64bit module
     lfsr_64bit rng (
         .clk(clk),
@@ -67,6 +67,8 @@ module tt_um_devinatkin_cookiemonster
         .rst_n(rst_n),
         .xcoor(xcoor),
         .ycoor(ycoor),
+        .write_enable(write_enable),
+        .write_data(videodata_in),
         .red(red),
         .green(green),
         .blue(blue)

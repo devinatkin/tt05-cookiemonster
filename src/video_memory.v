@@ -17,12 +17,14 @@ module ram_16x16 (
     always @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             // Reset RAM to all zeros
+            
             integer i, j;
             for (i = 0; i < 16; i = i + 1) begin
                 for (j = 0; j < 16; j = j + 1) begin
                     ram[i][j] <= 1'b0;
                 end
             end
+            read_data <= 1'b0;
         end else if (write_enable) begin
             // Write data to RAM at location (x, y)
             ram[x][y] <= write_data;

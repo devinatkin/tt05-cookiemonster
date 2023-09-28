@@ -19,12 +19,17 @@ module tb_vga_out();
     wire [1:0] green_pixel_out;
     wire [1:0] blue_pixel_out;
 
+    reg write_enable;
+    reg write_data;
+
     // Instantiate the vga_ram_display module
     vga_ram_display video_memory (
         .clk(clk),
         .rst_n(rst_n),
         .xcoor(xcoor),
         .ycoor(ycoor),
+        .write_enable(write_enable),
+        .write_data(write_data),
         .red(red),
         .green(green),
         .blue(blue)
@@ -53,9 +58,15 @@ module tb_vga_out();
     initial begin
         #10;
         rst_n = 0;
-        #50;
+        write_enable = 1'b0;
+        write_data = 1'b0;
+        #800;
         rst_n = 1;
-        
+        write_enable = 1'b1;
+        write_data = 1'b1;
+        #10000000;
+        write_data = 1'b0;
+        write_enable = 1'b0;
         //Wait for 6 frames to be generated before ending the simulation (60 frames = 1 second)
         #100000000;
 
@@ -74,8 +85,6 @@ module tb_vga_out();
         .blue_pixel_in(blue),
         .hs(hs),
         .vs(vs),
-        .x(x),
-        .y(y),
         .xcoor(xcoor),
         .ycoor(ycoor),
         .red_pixel_out(red_pixel_out),
