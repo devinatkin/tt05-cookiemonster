@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 module edge_detector (
     input wire clk,          // Clock input
     input wire rst_n,        // Active-low reset

@@ -20,7 +20,22 @@ module tb_vga_out();
     wire [1:0] blue_pixel_out;
 
     reg write_enable;
+    
     reg write_data;
+    reg data;
+    wire rising_out_active;
+    wire falling_out_active;
+    wire active;
+
+    wire rising_out_xcoor;
+    wire falling_out_xcoor;
+
+    wire rising_out_ycoor;
+    wire falling_out_ycoor;
+
+    wire changing_coors;
+    assign changing_coors = rising_out_xcoor || rising_out_ycoor || falling_out_xcoor || falling_out_ycoor; // Slow Clock for writing to RAM
+    assign write_enable = !active;
 
     // Instantiate the vga_ram_display module
     vga_ram_display video_memory (
@@ -33,6 +48,39 @@ module tb_vga_out();
         .red(red),
         .green(green),
         .blue(blue)
+    );
+
+    edge_detector display_load (
+        .clk(clk),
+        .rst_n(rst_n),
+        .signal_in(active),
+        .rising_out(rising_out_active),
+        .falling_out(falling_out_active)
+    );
+
+    edge_detector xcoor_change (
+        .clk(clk),
+        .rst_n(rst_n),
+        .signal_in(xcoor[0]),
+        .rising_out(rising_out_xcoor),
+        .falling_out(falling_out_xcoor)
+    );
+
+    edge_detector ycoor_change (
+        .clk(changing_coors),
+        .rst_n(rst_n),
+        .signal_in(ycoor[0]),
+        .rising_out(rising_out_ycoor),
+        .falling_out(falling_out_ycoor)
+    );
+
+    shift_register_256 uut (
+        .clk(clk),
+        .rst_n(rst_n),
+        .en(1'b1),
+        .din(data),
+        .shift_dir(1'b0),
+        .dout(write_data)
     );
 
     // Task for writing simulation results to an output file
@@ -58,15 +106,21 @@ module tb_vga_out();
     initial begin
         #10;
         rst_n = 0;
-        write_enable = 1'b0;
-        write_data = 1'b0;
+
         #800;
         rst_n = 1;
-        write_enable = 1'b1;
-        write_data = 1'b1;
-        #10000000;
-        write_data = 1'b0;
-        write_enable = 1'b0;
+        while(active == 1) begin
+            #1;
+        end
+        while (active == 0) begin
+            if(xcoor == 2 && ycoor == 2) begin
+                data = 1;
+            end
+            else begin
+                data = 0;
+            end
+        end
+
         //Wait for 6 frames to be generated before ending the simulation (60 frames = 1 second)
         #100000000;
 
@@ -87,6 +141,7 @@ module tb_vga_out();
         .vs(vs),
         .xcoor(xcoor),
         .ycoor(ycoor),
+        .display_active(active),
         .red_pixel_out(red_pixel_out),
         .green_pixel_out(green_pixel_out),
         .blue_pixel_out(blue_pixel_out)

@@ -1,3 +1,5 @@
+`timescale 1ns/1ps
+
 // 256-bit SISO Shift Register Implementation in Verilog
 module shift_register_256(
     input wire clk,        // Clock Signal
